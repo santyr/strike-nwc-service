@@ -11,6 +11,7 @@ const NWC_CONNECTION_SECRET = process.env.NWC_CONNECTION_SECRET;
 const TOTAL_MAX_SEND_AMOUNT_IN_SATS = process.env.TOTAL_MAX_SEND_AMOUNT_IN_SATS
   ? Number(process.env.TOTAL_MAX_SEND_AMOUNT_IN_SATS)
   : 10000;
+const LOG_LEVEL = process.env.LOG_LEVEL || 'INFO';
 
 if (!STRIKE_API_KEY) {
   console.log("Missing STRIKE_API_KEY in .env file.");
@@ -58,4 +59,5 @@ module.exports = {
   NWC_CONNECTION_PUBKEY: getPublicKey(NWC_CONNECTION_SECRET),
   NWC_CONNECTION_SECRET,
   TOTAL_MAX_SEND_AMOUNT_IN_SATS,
+  LOG_LEVEL,
 };
