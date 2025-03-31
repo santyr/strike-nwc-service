@@ -114,4 +114,71 @@ const lookupInvoice = async (invoiceId) => {
   return state;
 };
 
-module.exports = { payInvoice, makeInvoice, lookupInvoice };
+const getExchangeRates = async (currency = STRIKE_SOURCE_CURRENCY) => {
+  const { data } = await axios({
+    method: "get",
+    url: `https://api.strike.me/v1/rates/ticker`,
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${STRIKE_API_KEY}`,
+    },
+    params: {
+      currency,
+    },
+  });
+
+  return data;
+};
+
+const getAccountDetails = async () => {
+  const { data } = await axios({
+    method: "get",
+    url: "https://api.strike.me/v1/accounts/handle/me",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${STRIKE_API_KEY}`,
+    },
+  });
+
+  return data;
+};
+
+const getBalance = async () => {
+  const { data } = await axios({
+    method: "get",
+    url: "https://api.strike.me/v1/balances/me",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${STRIKE_API_KEY}`,
+    },
+  });
+
+  return data;
+};
+
+const getTransactions = async (limit = 10, offset = 0) => {
+  const { data } = await axios({
+    method: "get",
+    url: "https://api.strike.me/v1/transactions",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${STRIKE_API_KEY}`,
+    },
+    params: {
+      limit,
+      offset,
+    },
+  });
+
+  return data;
+};
+
+module.exports = { 
+  payInvoice, 
+  makeInvoice, 
+  lookupInvoice,
+  getExchangeRates,
+  getAccountDetails,
+  getBalance,
+  getTransactions
+};
